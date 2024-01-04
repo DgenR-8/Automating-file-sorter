@@ -36,7 +36,7 @@ zip_extensions = [".zip", ".rar"]
 text_extensions = [".txt"]
 # ? supported text type
 
-def makeUnique(dest, name):
+def make_unique(dest, name):
     filename, extension = splitext(name)
     counter = 1
     while exists(f"{dest}/{name}"):
@@ -47,7 +47,7 @@ def makeUnique(dest, name):
 
 def move_file(dest, entry, name):
     if exists (f"{dest}/{name}"):
-        unique_name = makeUnique(name)
+        unique_name = make_unique(dest, name)
         oldName = join(dest, name)
         newName = join(dest, unique_name)
         rename(oldName, newName)
