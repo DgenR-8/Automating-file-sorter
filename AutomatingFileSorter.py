@@ -16,7 +16,8 @@ dest_dir_image = "/Users/Jdsta/Images"
 dest_dir_documents = "/Users/Jdsta/Documents"
 dest_dir_exe = "/Users/Jdsta/Exe Files"
 dest_dir_zip = "/Users/Jdsta/Zip Files"
-dest_dir_links = "/Users/Jdsta/Hyperlink Files"
+dest_dir_hyperlinks = "/Users/Jdsta/Hyperlink Files"
+dest_dir_text = "/Users/Jdsta/Text Files"
 
 # ? supported image types
 image_extensions = [".jpg", ".jpeg", ".jpe", ".jif", ".jfif", ".jfi", ".png", ".gif", ".webp", ".tiff", ".tif", ".psd", ".raw", ".arw", ".cr2", ".nrw",
@@ -34,22 +35,22 @@ exe_extensions = [".exe"]
 zip_extensions = [".zip", ".rar"]
 # ? supported zip types
 hyperlink_extensions = [".htm"]
-# ? supported hyperlink types
+# ? supported hyperlink type
+text_extensions = [".txt"]
+# ? supported text type
 
-def make_unique(dest, name):
+def makeUnique(dest, name):
     filename, extension = splitext(name)
     counter = 1
-    # * IF FILE EXISTS, ADDS NUMBER TO THE END OF THE FILENAME
     while exists(f"{dest}/{name}"):
         name = f"{filename}({str(counter)}){extension}"
         counter += 1
-
+    
     return name
 
-
 def move_file(dest, entry, name):
-    if exists(f"{dest}/{name}"):
-        unique_name = make_unique(dest, name)
+    if exists (f"{dest}/{name}"):
+        unique_name = makeUnique(name)
         oldName = join(dest, name)
         newName = join(dest, unique_name)
         rename(oldName, newName)
@@ -66,6 +67,10 @@ class MoverHandler(FileSystemEventHandler):
                 self.check_video_files(entry, name)
                 self.check_image_files(entry, name)
                 self.check_document_files(entry, name)
+                self.check_exe_files(entry, name)
+                self.check_zip_files(entry, name)
+                self.check_hyperlink_files(entry, name)
+                self.check_text_files(entry, name)
 
     def check_audio_files(self, entry, name):  # * Checks all Audio Files
         for audio_extension in audio_extensions:
@@ -94,6 +99,30 @@ class MoverHandler(FileSystemEventHandler):
             if name.endswith(documents_extension) or name.endswith(documents_extension.upper()):
                 move_file(dest_dir_documents, entry, name)
                 logging.info(f"Moved document file: {name}")
+    
+    def check_exe_files(self, entry, name):  # * Checks all Document Files
+        for exe_extension in exe_extensions:
+            if name.endswith(exe_extension) or name.endswith(exe_extension.upper()):
+                move_file(dest_dir_exe, entry, name)
+                logging.info(f"Moved exe file: {name}")
+    
+    def check_zip_files(self, entry, name):  # * Checks all Document Files
+        for zip_extension in zip_extensions:
+            if name.endswith(zip_extension) or name.endswith(zip_extension.upper()):
+                move_file(dest_dir_zip, entry, name)
+                logging.info(f"Moved zip file: {name}")
+    
+    def check_hyperlink_files(self, entry, name):  # * Checks all Document Files
+        for hyperlink_extension in hyperlink_extensions:
+            if name.endswith(hyperlink_extension) or name.endswith(hyperlink_extension.upper()):
+                move_file(dest_dir_hyperlinks, entry, name)
+                logging.info(f"Moved hyperlink file: {name}")
+    
+    def check_text_files(self, entry, name):  # * Checks all Document Files
+        for text_extension in text_extensions:
+            if name.endswith(text_extension) or name.endswith(text_extension.upper()):
+                move_file(dest_dir_text, entry, name)
+                logging.info(f"Moved text file: {name}")
             
 
 if __name__ == "__main__":
