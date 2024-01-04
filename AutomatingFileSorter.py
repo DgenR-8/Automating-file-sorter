@@ -16,7 +16,6 @@ dest_dir_image = "/Users/Jdsta/Images"
 dest_dir_documents = "/Users/Jdsta/Documents"
 dest_dir_exe = "/Users/Jdsta/Exe Files"
 dest_dir_zip = "/Users/Jdsta/Zip Files"
-dest_dir_hyperlinks = "/Users/Jdsta/Hyperlink Files"
 dest_dir_text = "/Users/Jdsta/Text Files"
 
 # ? supported image types
@@ -34,8 +33,6 @@ exe_extensions = [".exe"]
 # ? supported exe type
 zip_extensions = [".zip", ".rar"]
 # ? supported zip types
-hyperlink_extensions = [".htm"]
-# ? supported hyperlink type
 text_extensions = [".txt"]
 # ? supported text type
 
@@ -69,7 +66,6 @@ class MoverHandler(FileSystemEventHandler):
                 self.check_document_files(entry, name)
                 self.check_exe_files(entry, name)
                 self.check_zip_files(entry, name)
-                self.check_hyperlink_files(entry, name)
                 self.check_text_files(entry, name)
 
     def check_audio_files(self, entry, name):  # * Checks all Audio Files
@@ -106,19 +102,13 @@ class MoverHandler(FileSystemEventHandler):
                 move_file(dest_dir_exe, entry, name)
                 logging.info(f"Moved exe file: {name}")
     
-    def check_zip_files(self, entry, name):  # * Checks all Document Files
+    def check_zip_files(self, entry, name):  # * Checks all Zip Files
         for zip_extension in zip_extensions:
             if name.endswith(zip_extension) or name.endswith(zip_extension.upper()):
                 move_file(dest_dir_zip, entry, name)
                 logging.info(f"Moved zip file: {name}")
     
-    def check_hyperlink_files(self, entry, name):  # * Checks all Document Files
-        for hyperlink_extension in hyperlink_extensions:
-            if name.endswith(hyperlink_extension) or name.endswith(hyperlink_extension.upper()):
-                move_file(dest_dir_hyperlinks, entry, name)
-                logging.info(f"Moved hyperlink file: {name}")
-    
-    def check_text_files(self, entry, name):  # * Checks all Document Files
+    def check_text_files(self, entry, name):  # * Checks all Text Files
         for text_extension in text_extensions:
             if name.endswith(text_extension) or name.endswith(text_extension.upper()):
                 move_file(dest_dir_text, entry, name)
