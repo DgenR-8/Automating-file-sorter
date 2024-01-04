@@ -6,12 +6,13 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
 source_dir = "/Users/Jdsta/Downloads"
-dest_dir_sfx = "/Users/Jdsta/Desktop/Sound"
-dest_dir_music = "/Users/Jdsta/Desktop/Sound/Music"
-dest_dir_video = "/Users/Jdsta/Desktop/Downloaded video"
-dest_dir_image = "/Users/Jdsta/Desktop/Downloaded Images"
+dest_dir_sfx = "/Users/Jdsta/Sounds"
+dest_dir_music = "/Users/Jdsta/Sounds/Music"
+dest_dir_video = "/Users/Jdsta/Videos"
+dest_dir_image = "/Users/Jdsta/Images"
 dest_dir_exe = "/Users/Jdsta/Desktop/Exe Files"
 dest_dir_zip = "/Users/Jdsta/Desktop/Zip Files"
+dest_dir_links = "/Users/Jdsta/Desktop/Hyperlink Files"
 
 def makeUnique(path):
     filename, extension = splitext(path)
@@ -47,6 +48,9 @@ class FileHandler(FileSystemEventHandler):
                     move(dest, entry, name)
                 elif name.endswith('.zip'):
                     dest = dest_dir_zip
+                    move(dest, entry, name)
+                elif name.endswith('.htm'):
+                    dest = dest_dir_links
                     move(dest, entry, name)
             
 
